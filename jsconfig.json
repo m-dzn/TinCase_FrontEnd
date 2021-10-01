@@ -1,0 +1,17 @@
+{
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "target": "es6",
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {
+      "assets/*": ["./assets/*"],
+      "components/*": ["./components/*"],
+      "lib/*": ["./lib/*"],
+      "pages/*": ["./pages/*"],
+      "routes/*": ["./routes/*"],
+      "styles/*": ["./styles/*"]
+    }
+  }
+}

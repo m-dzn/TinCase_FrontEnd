@@ -1,0 +1,4 @@
+{
+  "userApiBaseUrl": "http://localhost:8081",
+  "postPageUrl": "/post"
+}
