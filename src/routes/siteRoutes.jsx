@@ -1,9 +1,39 @@
 import config from "config.json";
-import { HomePage, PostPage, JoinPage, LoginPage } from "pages";
+import { authActions } from "modules/auth";
+import {
+  HomePage,
+  PostListPage,
+  JoinPage,
+  LoginPage,
+  PostWritePage,
+  PostEditPage,
+  PostDetailPage,
+} from "pages";
 import { BsNewspaper, BsPencilSquare } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 
-export const sidebarMenus = [
+const { route } = config;
+
+export const navbarRoutes = [
+  {
+    label: "로그인",
+    icon: null,
+    path: route.loginPage,
+    exact: true,
+    page: LoginPage,
+    isLoggedIn: false,
+  },
+  {
+    label: "회원가입",
+    icon: null,
+    path: route.joinPage,
+    exact: true,
+    page: JoinPage,
+    isLoggedIn: false,
+  },
+];
+
+export const sidebarRoutes = [
   {
     label: "Home",
     icon: HiHome,
@@ -15,24 +45,27 @@ export const sidebarMenus = [
   {
     label: "Posts",
     icon: BsPencilSquare,
-    path: config.postPageUrl,
-    exact: false,
-    page: PostPage,
+    path: route.postPage,
+    exact: true,
+    page: PostListPage,
     dashboard: true,
   },
 ];
 
-export const navbarMenus = [
+export const pages = [
   {
-    label: "회원가입",
-    icon: null,
-    path: "/join",
-    page: JoinPage,
+    path: route.postWritePage,
+    exact: false,
+    page: PostWritePage,
   },
   {
-    label: "로그인",
-    icon: null,
-    path: "/login",
-    page: LoginPage,
+    path: route.postEditPage,
+    exact: false,
+    page: PostEditPage,
+  },
+  {
+    path: route.postDetailPage,
+    exact: false,
+    page: PostDetailPage,
   },
 ];

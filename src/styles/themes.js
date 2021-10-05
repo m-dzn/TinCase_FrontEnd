@@ -1,16 +1,16 @@
-import { globalTokens, aliasTokens } from "./tokens";
+import { tokens, palette } from "./tokens";
 
 export const themes = {
   light: {
-    ...aliasTokens,
+    ...tokens,
     color: {
-      background: tokens.color.gray[100],
-      surface: tokens.color.white,
-      fontPrimary: tokens.color.black,
-      fontSecondary: tokens.color.white,
+      background: palette.gray[100],
+      surface: palette.white,
+      fontPrimary: palette.black,
+      fontSecondary: palette.white,
     },
   },
   dark: {
-    ...aliasTokens,
+    ...tokens,
   },
 };

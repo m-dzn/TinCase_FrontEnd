@@ -1,46 +1,26 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { Sidebar, FlexBox, Navbar } from "components";
-import { sidebarMenus, navbarMenus } from "routes";
+import { FlexBox } from "components";
 
-const Template = styled.div`
-  display: flex;
-
+const Header = styled.div`
   ${({
     theme: {
-      contentsLayout: { minHeight },
+      contentsLayout: { headerBottom },
     },
-  }) => css`
-    min-height: ${minHeight};
-  `}
-`;
-
-const Main = styled.main`
-  flex: 1;
-
-  ${({
-    theme: {
-      contentsLayout: { mainVPad, mainHPad },
-    },
-  }) => css`
-    padding: ${mainVPad}rem ${mainHPad}rem;
-  `}
+  }) =>
+    css`
+      padding-bottom: ${headerBottom}rem;
+    `}
 `;
 
 export function ContentsLayout({ title, children }) {
   return (
-    <Template>
-      <Sidebar menus={sidebarMenus} />
-      <FlexBox column>
-        <header>
-          <Navbar menus={navbarMenus} />
-        </header>
-        <Main>
-          <h3>{title}</h3>
-          {children}
-        </Main>
-      </FlexBox>
-    </Template>
+    <>
+      <Header>
+        <h4>{title}</h4>
+      </Header>
+      <FlexBox column>{children}</FlexBox>
+    </>
   );
 }
 

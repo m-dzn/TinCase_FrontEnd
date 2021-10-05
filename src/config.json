@@ -1,4 +1,22 @@
 {
-  "userApiBaseUrl": "http://localhost:8081",
-  "postPageUrl": "/post"
+  "api": {
+    "userApi": "http://localhost:8081",
+    "authMapping": "/auth",
+    "postMapping": "/posts"
+  },
+  "route": {
+    "joinPage": "/join",
+    "loginPage": "/login",
+    "postPage": "/post",
+    "postWritePage": "/post/write",
+    "postEditPage": "/post/edit",
+    "postDetailPage": "/post/:postId"
+  },
+  "const": {
+    "accessToken": "access_token",
+    "REPLACE": "REPLACE"
+  },
+  "msg": {
+    "logout": "정말 로그아웃 하시겠습니까?"
+  }
 }

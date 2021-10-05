@@ -8,6 +8,7 @@ const config = {
   output: {
     ...common.output,
     chunkFilename: "dist/[name].chunk.js",
+    publicPath: "/",
   },
   devtool: "cheap-module-source-map",
   devServer: {

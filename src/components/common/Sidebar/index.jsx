@@ -38,9 +38,8 @@ export function Sidebar({ menus }) {
     <Aside>
       <Logo />
       <SideMenu>
-        {menus.map((item) => (
-          <SideMenuItem item={item} key={item.path} />
-        ))}
+        {menus &&
+          menus.map((item) => <SideMenuItem item={item} key={item.path} />)}
       </SideMenu>
     </Aside>
   );

@@ -9,6 +9,7 @@
       "assets/*": ["./assets/*"],
       "components/*": ["./components/*"],
       "lib/*": ["./lib/*"],
+      "modules/*": ["./modules/*"],
       "pages/*": ["./pages/*"],
       "routes/*": ["./routes/*"],
       "styles/*": ["./styles/*"]

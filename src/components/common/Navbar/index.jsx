@@ -36,14 +36,21 @@ const Menu = styled.ul`
   display: flex;
 `;
 
-export function Navbar({ menus }) {
+export function Navbar({ menus, currentUser }) {
+  let menuItems = [];
+
+  const isLoggedIn = !!currentUser;
+
+  if (menus) {
+    menuItems = menus
+      .filter((item) => item.isLoggedIn === isLoggedIn)
+      .map((item) => <NavMenuItem key={item.label} item={item} />);
+  }
+
   return (
     <Nav>
       <Logo>TINCASE</Logo>
-      <Menu>
-        {menus &&
-          menus.map((item) => <NavMenuItem key={item.path} item={item} />)}
-      </Menu>
+      <Menu>{menuItems}</Menu>
     </Nav>
   );
 }

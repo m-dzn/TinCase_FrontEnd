@@ -32,9 +32,52 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  h3 {
-    font-size: 2.8rem;
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
+  }
+
+  h1 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h2}rem;
+    `}
+  }
+
+  h2 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h2}rem;
+    `}
+  }
+
+  h3 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h3}rem;
+    `}
+  }
+
+  h4 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h4}rem;
+    `}
+  }
+
+  h5 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h5}rem;
+    `}
+  }
+
+  h6 {
+    ${({ theme: { fontSize } }) => css`
+      font-size: ${fontSize.h6}rem;
+    `}
   }
   
 `;
