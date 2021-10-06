@@ -5,6 +5,7 @@ const shadows = {
 };
 
 export const palette = {
+  primary: "#5B5759",
   red: "#f9320c",
   green: "#3ac569",
   yellow: "#f8ca00",
@@ -31,12 +32,21 @@ const fontSize = {
   h4: 2.8,
   h5: 2.4,
   h6: 2,
-  xl: 2,
-  lg: 1.8,
-  md: 1.6,
+  xl: 1.8,
+  lg: 1.6,
+  md: 1.5,
   sm: 1.4,
   xs: 1.3,
 };
+
+const fontWeight = {
+  thin: 400,
+  normal: 600,
+  bold: 700,
+  black: 800,
+};
+
+const navAvatarSize = 2.4;
 
 export const aliasTokens = {
   siteLayout: {
@@ -45,7 +55,10 @@ export const aliasTokens = {
     mainHPad: unit * 10,
   },
   contentsLayout: {
-    headerBottom: unit * 8,
+    vPad: unit * 12,
+    hPad: unit * 14,
+    headerVPad: unit * 8,
+    headerHPad: 0,
   },
   navbar: {
     height: unit * 10,
@@ -54,20 +67,47 @@ export const aliasTokens = {
     fontSize: fontSize.xs,
     itemGap: unit * 2,
     itemHPad: unit * 2,
+    avatarSize: navAvatarSize,
   },
   sidebar: {
     width: unit * 10,
     background: palette.gray[900],
+    avatarSize: navAvatarSize,
   },
   postList: {
     vPad: unit * 6,
     hPad: unit * 4,
+  },
+  authForm: {
+    width: unit * 100,
+    inputGap: unit * 6,
+    marginBottom: unit * 4,
+  },
+  input: {
+    height: unit * 8,
+    vPad: unit * 2,
+  },
+  postCode: {
+    iconRatio: 0.7,
+    iconMarginRight: 0.4,
+  },
+  profileImgBox: {
+    iconSize: 1.75,
+  },
+  button: {
+    defaultBgColor: palette.gray[300],
+    md: {
+      vPad: unit * 1.5,
+      hPadRatio: 1.75,
+      radius: unit,
+    },
   },
 };
 
 export const tokens = {
   unit,
   fontSize,
+  fontWeight,
   shadows,
   ...aliasTokens,
 };

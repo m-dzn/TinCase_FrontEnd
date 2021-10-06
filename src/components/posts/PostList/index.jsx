@@ -4,10 +4,13 @@ import { PostItem } from "./PostItem/index";
 
 const List = styled.div``;
 
-export function PostList({ posts }) {
+export function PostList({ posts, pagination }) {
   return (
     <List>
-      {posts && posts.map((post) => <PostItem post={post} key={post.id} />)}
+      {posts &&
+        posts.map((post) => (
+          <PostItem post={post} key={post.id} pagination={pagination} />
+        ))}
     </List>
   );
 }

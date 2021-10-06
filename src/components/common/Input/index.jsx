@@ -1,11 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledInput = styled.input`
   border: 0.1rem solid black;
-  height: 3rem;
   border-radius: 0.4rem;
+
+  ${({
+    noLine,
+    theme: {
+      input: { height, vPad },
+    },
+  }) => css`
+    height: ${height}rem;
+    padding: 0 ${vPad}rem;
+
+    ${noLine &&
+    css`
+      outline: none;
+      border: 1px solid transparent;
+    `}
+  `}
 `;
 
 export function Input({ ...rest }) {

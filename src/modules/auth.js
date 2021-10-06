@@ -4,6 +4,8 @@ import { handleActions, createAction } from "redux-actions";
 import { takeLatest } from "redux-saga/effects";
 import { authAPI } from "lib/api";
 
+const { ACCESS_TOKEN } = config.const;
+
 // 액션 타입
 const JOIN = {
   REQUEST: "auth/JOIN_REQUEST",
@@ -16,6 +18,11 @@ const LOGIN = {
   FAILURE: "auth/LOGIN_FAILURE",
 };
 const LOGOUT = "auth/LOGOUT";
+const GET_CURRENT_USER = {
+  REQUEST: "auth/GET_CURRENT_USER_REQUEST",
+  SUCCESS: "auth/GET_CURRENT_USER_SUCCESS",
+  FAILURE: "auth/GET_CURRENT_USER_FAILURE",
+};
 
 // 액션 생성자
 const join = createAction(JOIN.REQUEST, (joinForm, redirectUrl = "/") => ({
@@ -27,20 +34,27 @@ const login = createAction(LOGIN.REQUEST, (loginForm, redirectUrl = "/") => ({
   redirectUrl,
 }));
 const logout = createAction(LOGOUT);
+const getCurrentUser = createAction(GET_CURRENT_USER.REQUEST);
 
 export const authActions = {
   join,
   login,
   logout,
+  getCurrentUser,
 };
 
 // 리덕스 사가
 const join$ = createAsyncSaga(JOIN, authAPI.join);
 const login$ = createAsyncSaga(LOGIN, authAPI.login);
+const getCurrentUser$ = createAsyncSaga(
+  GET_CURRENT_USER,
+  authAPI.getCurrentUser
+);
 
 export function* authSaga() {
   yield takeLatest(JOIN.REQUEST, join$);
   yield takeLatest(LOGIN.REQUEST, login$);
+  yield takeLatest(GET_CURRENT_USER.REQUEST, getCurrentUser$);
 }
 
 // 초기 상태
@@ -64,10 +78,19 @@ export const auth = handleActions(
       };
     },
     [LOGIN.FAILURE]: (state, action) => state,
-    [LOGOUT]: (state, action) => ({
+    [LOGOUT]: (state, action) => {
+      localStorage.removeItem(ACCESS_TOKEN);
+      return {
+        ...state,
+        currentUser: undefined,
+      };
+    },
+    [GET_CURRENT_USER.REQUEST]: (state, action) => state,
+    [GET_CURRENT_USER.SUCCESS]: (state, { payload: currentUser }) => ({
       ...state,
-      currentUser: undefined,
+      currentUser,
     }),
+    [GET_CURRENT_USER.FAILURE]: (state, action) => state,
   },
   initState
 );

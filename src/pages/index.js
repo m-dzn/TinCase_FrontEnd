@@ -1,4 +1,5 @@
 export * from "./DashBoard/HomePage";
+export * from "./DashBoard/UserPage";
 export * from "./PostDetailPage";
 export * from "./PostListPage";
 export * from "./JoinPage";

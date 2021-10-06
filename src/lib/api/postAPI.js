@@ -4,14 +4,14 @@ import config from "config.json";
 const postMapping = config.api.postMapping;
 
 export async function writePost(newPostForm) {
-  return userClient.post(postMapping, newPostForm); // , authHeader()
+  return userClient.post(postMapping, newPostForm, authHeader());
 }
 
 export async function readPost({ id }) {
   return userClient.get(`${postMapping}/${id}`);
 }
 
-export async function updatePost(id, editPostForm) {
+export async function updatePost({ id, editPostForm }) {
   return userClient.put(`${postMapping}/${id}`, editPostForm, authHeader());
 }
 

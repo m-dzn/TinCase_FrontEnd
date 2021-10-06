@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ContentsLayout, PostEditor } from "components";
+import { ContentsLayout, PostEditor, PostEditorButtonBox } from "components";
 import config from "config.json";
 import { history } from "lib/history";
 import { useDispatch, useSelector } from "react-redux";
 import { postActions } from "modules/post";
+import qs from "query-string";
 
-const { postPage, loginPage } = config.route;
+const { postListPage } = config.route;
+const { EDIT_MODE } = config.const;
 
 const initForm = {
   title: "",
@@ -13,16 +15,40 @@ const initForm = {
 };
 
 export function PostEditPage({ location }) {
-  const currentPost = location.state?.currentPost;
+  const query = qs.parse(location.search);
+  const postId = query.postId;
 
   const dispatch = useDispatch();
-  const [editPostForm, setEditPostForm] = useState(currentPost || initForm);
-  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  const [editPostForm, setEditPostForm] = useState(initForm);
+  const { currentUser, currentPost } = useSelector(({ auth, post }) => ({
+    currentUser: auth.currentUser,
+    currentPost: post.currentPost,
+  }));
+
+  useEffect(() => {
+    if (currentPost) {
+      setEditPostForm((prev) => ({
+        ...prev,
+        title: currentPost.title,
+        content: currentPost.content,
+      }));
+    } else if (postId) {
+      dispatch(postActions.fetchById(postId));
+    }
+  }, [currentPost, postId]);
+
+  useEffect(() => {
+    if (currentUser) {
+      setEditPostForm((prev) => ({
+        ...prev,
+        writerId: currentUser.id,
+      }));
+    }
+  }, [currentUser]);
 
   const { title, content } = editPostForm;
 
-  const onChange = useCallback((event) => {
-    const { name, value } = event.target;
+  const onChange = useCallback((name, value) => {
     setEditPostForm((prev) => ({
       ...prev,
       [name]: value,
@@ -32,41 +58,26 @@ export function PostEditPage({ location }) {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch(postActions.write(editPostForm));
+      dispatch(
+        postActions.edit(postId, editPostForm, `${postListPage}/${postId}`)
+      );
     },
-    [editPostForm]
+    [postId, editPostForm]
   );
 
   const onClickList = useCallback((event) => {
     event.preventDefault();
-    history.push(postPage);
+    history.push({ pathname: postListPage, search: location.search });
   }, []);
 
-  useEffect(() => {
-    if (!currentUser)
-      history.replace({
-        pathname: loginPage,
-        state: { from: location.pathname, currentPost: currentPost },
-      });
-    // else if (!currentPost) history.goBack();
-
-    if (currentUser && currentUser.id) {
-      setEditPostForm((prev) => ({
-        ...prev,
-        writerId: currentUser.id,
-      }));
-    }
-  }, [currentPost, currentUser]);
-
-  if (!currentPost) return <div></div>;
+  if (!currentPost) return <div>로딩 중</div>;
 
   return (
     <ContentsLayout title="글 수정">
       <div>
-        <PostEditor
-          title={title}
-          content={content}
-          onChange={onChange}
+        <PostEditor title={title} content={content} onChange={onChange} />
+        <PostEditorButtonBox
+          type={EDIT_MODE}
           onSubmit={onSubmit}
           onClickList={onClickList}
         />

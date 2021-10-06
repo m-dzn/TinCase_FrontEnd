@@ -1,11 +1,47 @@
 import React, { useCallback, useEffect } from "react";
 import config from "config.json";
-import { ContentsLayout, PostViewer } from "components";
+import { ContentsLayout, PostViewer, PostDetailButtonBox } from "components";
 import { postActions } from "modules/post";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { history } from "lib/history";
+import styled from "styled-components";
 
-const { postEditPage } = config.route;
+const { postListPage } = config.route;
+
+const PostFooter = styled.footer`
+  display: flex;
+  flex-direction: column;
+`;
+
+const HeaderSubInfoBox = styled.div`
+  margin-top: 0.5rem;
+
+  display: flex;
+  align-items: center;
+`;
+
+const PostNav = styled.div`
+  height: 7rem;
+  display: flex;
+  align-items: center;
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+
+  a:hover,
+  button:hover {
+    filter: brightness(140%);
+  }
+
+  div {
+    margin-left: auto;
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+`;
 
 export function PostDetailPage({ match }) {
   const dispatch = useDispatch();
@@ -14,12 +50,14 @@ export function PostDetailPage({ match }) {
     currentPost: post.currentPost,
     currentUser: auth.currentUser,
   }));
+  const query = `?postId=${postId}&${location.search.substring(1)}`;
 
   const isOwner =
     currentPost && currentUser && currentPost.writerId === currentUser.id; // 자바 null 체크를 JS에서는 한 줄로 간단히 쓸 수 있다
 
   const onClickRemove = useCallback(() => {
     dispatch(postActions.remove(postId));
+    history.push(postListPage);
   }, [postId]);
 
   useEffect(() => {
@@ -31,23 +69,26 @@ export function PostDetailPage({ match }) {
   if (!currentPost) return <div>로딩 중</div>;
 
   return (
-    <ContentsLayout title={currentPost.title}>
+    <ContentsLayout>
       <PostViewer post={currentPost} />
-      <div>
-        {
-          <Link
-            to={{
-              pathname: postEditPage,
-              state: {
-                currentPost,
-              },
-            }}
-          >
-            수정
-          </Link>
-        }
-        {<button onClick={onClickRemove}>삭제</button>}
-      </div>
+      <PostDetailButtonBox
+        query={query}
+        onClickRemove={onClickRemove}
+        isOwner={isOwner}
+      />
+      <PostFooter>
+        <HeaderSubInfoBox>
+          {/* <TransparentButton>
+            <CopyToClipboard
+              text={postUrl}
+              onCopy={() => alert("주소가 복사되었습니다.")}
+            >
+              <MdContentCopy />
+            </CopyToClipboard>
+          </TransparentButton> */}
+          {/* <p>{postUrl}</p> */}
+        </HeaderSubInfoBox>
+      </PostFooter>
     </ContentsLayout>
   );
 }

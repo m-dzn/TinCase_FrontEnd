@@ -1,20 +1,30 @@
 {
   "api": {
+    "baseUrl": "http://localhost:3000",
     "userApi": "http://localhost:8081",
     "authMapping": "/auth",
-    "postMapping": "/posts"
+    "postMapping": "/posts",
+    "userMapping": "/users"
   },
   "route": {
     "joinPage": "/join",
     "loginPage": "/login",
-    "postPage": "/post",
+    "userPage": "/user",
+    "postListPage": "/post",
     "postWritePage": "/post/write",
     "postEditPage": "/post/edit",
-    "postDetailPage": "/post/:postId"
+    "postDetailPage": "/post/:postId",
+    "oAuth2Redirect": "/oauth2/redirect"
   },
   "const": {
-    "accessToken": "access_token",
-    "REPLACE": "REPLACE"
+    "ACCESS_TOKEN": "access_token",
+    "FROM": "from",
+    "REPLACE": "REPLACE",
+    "GOOGLE": "google",
+    "GITHUB": "github",
+    "NAVER": "naver",
+    "KAKAO": "kakao",
+    "EDIT_MODE": "EDIT"
   },
   "msg": {
     "logout": "정말 로그아웃 하시겠습니까?"

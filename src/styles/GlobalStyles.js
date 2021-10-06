@@ -14,18 +14,20 @@ export const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 62.5%;
+    font-family: 'Nanum Gothic', sans-serif;
   }
 
   body {
     margin: 0;
-    font-size: 1.6rem;
-    ${({ theme }) => css`
-      background: ${theme.color.background};
+
+    ${({ theme: { color, fontSize } }) => css`
+      background: ${color.background};
+      font-size: ${fontSize.md}rem;
     `}
   }
 
   body, a {
-    color: ${({ theme }) => theme.color.fontPrimary};
+    color: ${({ theme }) => theme.color.text};
   }
 
   a {
@@ -80,4 +82,7 @@ export const GlobalStyles = createGlobalStyle`
     `}
   }
   
+  em {
+    font-style: italic;
+  }
 `;

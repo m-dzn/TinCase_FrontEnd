@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { Avatar } from "components";
 import { Link } from "react-router-dom";
 
-const { postPage } = config.route;
+const { postListPage } = config.route;
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +22,9 @@ const Title = styled.h6``;
 
 const Writer = styled.div``;
 
-export function PostItem({ post }) {
+export function PostItem({ post, pagination }) {
+  const { pageNum, pageSize } = pagination;
+
   return (
     <Container>
       <div>
@@ -31,7 +33,11 @@ export function PostItem({ post }) {
       </div>
       <div>
         <Title>
-          <Link to={`${postPage}/${post.id}`}>{post.title}</Link>
+          <Link
+            to={`${postListPage}/${post.id}?pageNum=${pageNum}&pageSize=${pageSize}`}
+          >
+            {post.title}
+          </Link>
         </Title>
         <div>{post.createdAt}</div>
       </div>

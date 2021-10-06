@@ -1,7 +1,11 @@
-import { DashBoard } from "pages";
 import React, { Suspense } from "react";
+import config from "config.json";
+import { DashBoard } from "pages";
 import { Route, Switch } from "react-router";
+import { OAuth2Redirect } from "./OAuth2Redirect";
 import { navbarRoutes } from "./siteRoutes";
+
+const { oAuth2Redirect } = config.route;
 
 export function RootRouter() {
   return (
@@ -19,6 +23,7 @@ export function RootRouter() {
             )
         )}
 
+        <Route exact path={oAuth2Redirect} component={OAuth2Redirect} />
         <Route path="/" component={DashBoard} />
       </Switch>
     </Suspense>

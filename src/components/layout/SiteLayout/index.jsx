@@ -6,10 +6,12 @@ const Template = styled.div`
   display: flex;
 
   ${({
+    minWidth,
     theme: {
       siteLayout: { minHeight },
     },
   }) => css`
+    min-width: ${minWidth}rem;
     min-height: ${minHeight};
   `}
 `;
@@ -27,14 +29,15 @@ const Main = styled.main`
 `;
 
 export function SiteLayout({
+  minWidth = 48,
   currentUser,
   sidebarMenus,
   navbarMenus,
   children,
 }) {
   return (
-    <Template>
-      <Sidebar menus={sidebarMenus} />
+    <Template minWidth={minWidth}>
+      <Sidebar menus={sidebarMenus} currentUser={currentUser} />
       <FlexBox column>
         <header>
           <Navbar menus={navbarMenus} currentUser={currentUser} />

@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { Avatar } from "components";
 import { SideMenuItem } from "./SideMenuItem";
 
 const Aside = styled.aside`
@@ -16,13 +17,22 @@ const Aside = styled.aside`
 `;
 
 const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   ${({
     theme: {
-      sidebar: { width },
+      sidebar: { width, avatarSize },
     },
   }) => css`
     width: ${width}rem;
     height: ${width}rem;
+
+    img {
+      width: ${avatarSize}rem;
+      height: ${avatarSize}rem;
+    }
   `}
 `;
 
@@ -33,10 +43,12 @@ const SideMenu = styled.ul`
   left: 0;
 `;
 
-export function Sidebar({ menus }) {
+export function Sidebar({ menus, currentUser }) {
   return (
     <Aside>
-      <Logo />
+      <Logo>
+        <Avatar src={currentUser?.avatar} />
+      </Logo>
       <SideMenu>
         {menus &&
           menus.map((item) => <SideMenuItem item={item} key={item.path} />)}

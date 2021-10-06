@@ -1,22 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { AuthLayout, Input } from "components";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import config from "config.json";
+import { AuthLayout, LoginForm } from "components";
 import { authActions } from "modules/auth";
 import { useDispatch } from "react-redux";
-
-const Form = styled.form`
-  width: 625px;
-  margin-top: 40px;
-
-  display: flex;
-  flex-direction: column;
-
-  & > * + * {
-    margin-top: 10px;
-  }
-`;
 
 const initState = {
   email: "",
@@ -40,33 +25,18 @@ export function LoginPage({ location }) {
     }));
   }, []);
 
-  const onSubmit = useCallback(
-    async (event, form) => {
-      event.preventDefault();
-      dispatch(authActions.login(form, from));
-    },
-    [from]
-  );
+  const onSubmit = useCallback(() => {
+    dispatch(authActions.login(loginForm, from?.pathname || "/"));
+  }, [loginForm, from]);
 
   return (
     <AuthLayout>
-      로그인
-      <Form onSubmit={(event) => onSubmit(event, loginForm)}>
-        <Input
-          name="email"
-          type="email"
-          placeholder="이메일"
-          onChange={onChange}
-        />
-        <Input
-          name="password"
-          type="password"
-          placeholder="비밀번호"
-          onChange={onChange}
-        />
-        <button>로그인</button>
-        <Link to={config.route.joinPage}>회원가입 페이지로 이동</Link>
-      </Form>
+      <LoginForm
+        title="로그인"
+        form={loginForm}
+        onChange={onChange}
+        onSubmit={onSubmit}
+      />
     </AuthLayout>
   );
 }

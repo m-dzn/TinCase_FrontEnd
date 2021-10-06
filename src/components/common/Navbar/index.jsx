@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { Avatar, Logo } from "components";
 import { NavMenuItem } from "./NavMenuItem";
 
 const Nav = styled.nav`
@@ -20,20 +21,52 @@ const Nav = styled.nav`
   display: flex;
 `;
 
-const Logo = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-weight: bold;
-`;
-
 const Menu = styled.ul`
   height: 100%;
   margin-left: auto;
 
   display: flex;
+
+  & > li {
+    height: 100%;
+
+    ${({
+      theme: {
+        navbar: { fontSize, itemGap, itemHPad, avatarSize },
+      },
+    }) => css`
+      & > * {
+        font-size: ${fontSize}rem;
+      }
+
+      & + & {
+        margin-left: ${itemHPad}rem;
+      }
+
+      & a,
+      &.avatar {
+        padding: 0 ${itemGap}rem;
+
+        img {
+          width: ${avatarSize}rem;
+          height: ${avatarSize}rem;
+        }
+      }
+
+      & a {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
+  }
 `;
 
 export function Navbar({ menus, currentUser }) {
@@ -41,15 +74,26 @@ export function Navbar({ menus, currentUser }) {
 
   const isLoggedIn = !!currentUser;
 
+  if (isLoggedIn) {
+    const userAvatar = (
+      <li key="avatar" className="avatar">
+        <Avatar src={currentUser.avatar} />
+      </li>
+    );
+    menuItems.push(userAvatar);
+  }
+
   if (menus) {
-    menuItems = menus
-      .filter((item) => item.isLoggedIn === isLoggedIn)
-      .map((item) => <NavMenuItem key={item.label} item={item} />);
+    menuItems.push(
+      menus
+        .filter((item) => item.isLoggedIn === isLoggedIn)
+        .map((item) => <NavMenuItem key={item.label} item={item} />)
+    );
   }
 
   return (
     <Nav>
-      <Logo>TINCASE</Logo>
+      <Logo />
       <Menu>{menuItems}</Menu>
     </Nav>
   );

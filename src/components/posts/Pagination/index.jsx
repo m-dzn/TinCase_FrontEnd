@@ -10,7 +10,7 @@ import {
 import { Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const { postPage } = config.route;
+const { postListPage } = config.route;
 
 const buttonSize = 26;
 const hoverBgColor = "#89a3c2";
@@ -69,7 +69,7 @@ export const Pagination = withRouter(function ({
   const isLast = pageNum === totalPages;
 
   function gotoPage(num) {
-    history.push(`${postPage}?pageNum=${num}`);
+    history.push(`${postListPage}?pageNum=${num}`);
   }
 
   function onClickPageButton(num) {
@@ -82,7 +82,7 @@ export const Pagination = withRouter(function ({
 
   let pages = [];
 
-  if (pageNum < 0) return <Redirect to={postPage} />;
+  if (pageNum < 0) return <Redirect to={postListPage} />;
 
   for (let i = startPage; i <= endPage; i++) {
     pages.push(

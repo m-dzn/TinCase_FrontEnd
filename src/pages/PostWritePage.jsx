@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ContentsLayout, PostEditor } from "components";
+import { ContentsLayout, PostEditor, PostEditorButtonBox } from "components";
 import config from "config.json";
 import { history } from "lib/history";
 import { useDispatch, useSelector } from "react-redux";
 import { postActions } from "modules/post";
 
-const { postPage, loginPage } = config.route;
+const { postListPage, loginPage } = config.route;
 
 const initForm = {
   title: "",
@@ -20,8 +20,7 @@ export function PostWritePage({ location }) {
 
   const { title, writerId, content } = newPostForm;
 
-  const onChange = useCallback((event) => {
-    const { name, value } = event.target;
+  const onChange = useCallback((name, value) => {
     setNewPostForm((prev) => ({
       ...prev,
       [name]: value,
@@ -38,7 +37,7 @@ export function PostWritePage({ location }) {
 
   const onClickList = useCallback((event) => {
     event.preventDefault();
-    history.push(postPage);
+    history.push({ pathname: postListPage, search: location.search });
   }, []);
 
   useEffect(() => {
@@ -50,7 +49,7 @@ export function PostWritePage({ location }) {
     } else {
       history.replace({
         pathname: loginPage,
-        state: { from: location.pathname },
+        state: { from: location },
       });
     }
   }, [currentUser]);
@@ -66,6 +65,7 @@ export function PostWritePage({ location }) {
           onSubmit={onSubmit}
           onClickList={onClickList}
         />
+        <PostEditorButtonBox onSubmit={onSubmit} onClickList={onClickList} />
       </div>
     </ContentsLayout>
   );

@@ -14,7 +14,7 @@ const Item = styled.li`
 
     &,
     & a {
-      color: ${color.fontSecondary};
+      color: ${color.textSecondary};
     }
     &,
     & svg {

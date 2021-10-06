@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import defaultAvatar from "assets/images/defaultAvatar.png";
 import styled, { css } from "styled-components";
 
 const Img = styled.img`
@@ -13,7 +13,7 @@ const Img = styled.img`
 `;
 
 export function Avatar({ src, size = 32 }) {
-  return <Img src={src} alter="Avatar" size={size / 10} />;
+  return <Img src={src || defaultAvatar} alter="Avatar" size={size / 10} />;
 }
 
 Avatar.propTypes = {};

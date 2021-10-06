@@ -2,7 +2,6 @@ import { createAsyncSaga } from "lib/createAsyncSaga";
 import { createAction, handleActions } from "redux-actions";
 import { postAPI } from "lib/api";
 import { takeLatest } from "redux-saga/effects";
-import { history } from "lib/history";
 
 // 액션 타입
 const FETCH_POST_LIST = {
@@ -14,6 +13,11 @@ const WRITE = {
   REQUEST: "post/WRITE_REQUEST",
   SUCCESS: "post/WRITE_SUCCESS",
   FAILURE: "post/WRITE_FAILURE",
+};
+const EDIT = {
+  REQUEST: "post/EDIT_REQUEST",
+  SUCCESS: "post/EDIT_SUCCESS",
+  FAILURE: "post/EDIT_FAILURE",
 };
 const FETCH_BY_ID = {
   REQUEST: "post/FETCH_BY_ID_REQUEST",
@@ -36,6 +40,11 @@ const fetchPostList = createAction(
   })
 );
 const write = createAction(WRITE.REQUEST, (newPostForm) => newPostForm);
+const edit = createAction(EDIT.REQUEST, (id, editPostForm, redirectUrl) => ({
+  id,
+  editPostForm,
+  redirectUrl,
+}));
 const fetchById = createAction(FETCH_BY_ID.REQUEST, (id) => ({ id }));
 const remove = createAction(REMOVE.REQUEST, (id) => ({ id }));
 const pageChange = createAction(PAGE_CHANGE, (pageNum) => ({ pageNum }));
@@ -43,6 +52,7 @@ const pageChange = createAction(PAGE_CHANGE, (pageNum) => ({ pageNum }));
 export const postActions = {
   fetchPostList,
   write,
+  edit,
   fetchById,
   remove,
   pageChange,
@@ -51,12 +61,14 @@ export const postActions = {
 // 리덕스 사가
 const fetchPostList$ = createAsyncSaga(FETCH_POST_LIST, postAPI.getPostList);
 const write$ = createAsyncSaga(WRITE, postAPI.writePost);
+const edit$ = createAsyncSaga(EDIT, postAPI.updatePost);
 const fetchById$ = createAsyncSaga(FETCH_BY_ID, postAPI.readPost);
 const remove$ = createAsyncSaga(REMOVE, postAPI.removePost);
 
 export function* postSaga() {
   yield takeLatest(FETCH_POST_LIST.REQUEST, fetchPostList$);
   yield takeLatest(WRITE.REQUEST, write$);
+  yield takeLatest(EDIT.REQUEST, edit$);
   yield takeLatest(FETCH_BY_ID.REQUEST, fetchById$);
   yield takeLatest(REMOVE.REQUEST, remove$);
 }
@@ -89,6 +101,9 @@ export const post = handleActions(
     [WRITE.REQUEST]: (state, action) => state,
     [WRITE.SUCCESS]: (state, { payload: id }) => state,
     [WRITE.FAILURE]: (state, action) => state,
+    [EDIT.REQUEST]: (state, action) => state,
+    [EDIT.SUCCESS]: (state, { payload: id }) => state,
+    [EDIT.FAILURE]: (state, action) => state,
     [FETCH_BY_ID.REQUEST]: (state, action) => state,
     [FETCH_BY_ID.SUCCESS]: (state, { payload: currentPost }) => ({
       ...state,
@@ -103,7 +118,6 @@ export const post = handleActions(
     }),
     [REMOVE.FAILURE]: (state, action) => state,
     [PAGE_CHANGE]: (state, { payload }) => {
-      console.log(payload);
       return {
         ...state,
       };

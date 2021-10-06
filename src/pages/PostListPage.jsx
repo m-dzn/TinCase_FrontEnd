@@ -5,21 +5,34 @@ import { Link } from "react-router-dom";
 import config from "config.json";
 import { postActions } from "modules/post";
 import queryString from "query-string";
+import { SimpleButton } from "components/common/SimpleButton/index";
+import styled from "styled-components";
 
-const postPage = config.route.postPage;
+const { postListPage } = config.route;
+
+const ButtonBox = styled.div`
+  display: flex;
+  & > * {
+    margin-left: auto;
+  }
+`;
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export function PostListPage({ location }) {
   const query = queryString.parse(location.search);
   const pageNum = Number(query.pageNum || 1);
 
   const dispatch = useDispatch();
-  const {
-    posts,
-    pagination: { pageSize, totalPages },
-  } = useSelector(({ post }) => ({
+  const { posts, pagination } = useSelector(({ post }) => ({
     posts: post.posts,
     pagination: post.pagination,
   }));
+
+  const { pageSize, totalPages } = pagination;
 
   useEffect(() => {
     dispatch(postActions.fetchPostList(pageNum, pageSize));
@@ -27,19 +40,27 @@ export function PostListPage({ location }) {
 
   return (
     <ContentsLayout title="포스트">
-      <PostList posts={posts} />
-      <Link
-        to={{
-          pathname: `${postPage}/write`,
-        }}
-      >
-        글쓰기
-      </Link>
-      <Pagination
-        pageNum={pageNum}
-        pageSize={pageSize}
-        totalPages={totalPages}
-      />
+      <PostList posts={posts} pagination={pagination} />
+      <ButtonBox>
+        <Link
+          to={{
+            pathname: `${postListPage}/write`,
+            search: location.search,
+            state: {
+              from: location,
+            },
+          }}
+        >
+          <SimpleButton>글쓰기</SimpleButton>
+        </Link>
+      </ButtonBox>
+      <Footer>
+        <Pagination
+          pageNum={pageNum}
+          pageSize={pageSize}
+          totalPages={totalPages}
+        />
+      </Footer>
     </ContentsLayout>
   );
 }

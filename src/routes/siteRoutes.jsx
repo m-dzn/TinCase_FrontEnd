@@ -1,10 +1,10 @@
 import config from "config.json";
-import { authActions } from "modules/auth";
 import {
   HomePage,
   PostListPage,
   JoinPage,
   LoginPage,
+  UserPage,
   PostWritePage,
   PostEditPage,
   PostDetailPage,
@@ -45,7 +45,7 @@ export const sidebarRoutes = [
   {
     label: "Posts",
     icon: BsPencilSquare,
-    path: route.postPage,
+    path: route.postListPage,
     exact: true,
     page: PostListPage,
     dashboard: true,
@@ -57,15 +57,23 @@ export const pages = [
     path: route.postWritePage,
     exact: false,
     page: PostWritePage,
+    isPrivate: true,
   },
   {
     path: route.postEditPage,
     exact: false,
     page: PostEditPage,
+    isPrivate: true,
   },
   {
     path: route.postDetailPage,
     exact: false,
     page: PostDetailPage,
+  },
+  {
+    path: route.userPage,
+    exact: false,
+    page: UserPage,
+    isPrivate: true,
   },
 ];
