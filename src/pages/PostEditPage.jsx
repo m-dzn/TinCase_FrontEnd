@@ -58,9 +58,7 @@ export function PostEditPage({ location }) {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch(
-        postActions.edit(postId, editPostForm, `${postListPage}/${postId}`)
-      );
+      dispatch(postActions.edit(postId, editPostForm));
     },
     [postId, editPostForm]
   );

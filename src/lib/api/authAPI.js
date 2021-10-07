@@ -7,14 +7,20 @@ const { authMapping, ACCESS_TOKEN } = {
   ACCESS_TOKEN: config.const.ACCESS_TOKEN,
 };
 
-export async function join({ joinForm }) {
-  return userClient.post(`${authMapping}/join`, joinForm);
+export async function join({ joinForm, redirectUrl }) {
+  let response = await userClient.post(`${authMapping}/join`, joinForm);
+
+  response.redirectUrl = redirectUrl;
+
+  return response;
 }
 
-export async function login({ loginForm }) {
-  const response = await userClient.post(`${authMapping}/login`, loginForm);
+export async function login({ loginForm, redirectUrl }) {
+  let response = await userClient.post(`${authMapping}/login`, loginForm);
 
   localStorage.setItem(ACCESS_TOKEN, response.headers[ACCESS_TOKEN]);
+
+  response.redirectUrl = redirectUrl;
 
   return response;
 }

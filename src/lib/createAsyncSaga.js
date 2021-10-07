@@ -6,23 +6,19 @@ const { REPLACE } = config.const;
 
 export function createAsyncSaga(type, asyncAPI, routeType) {
   return function* (action) {
-    let redirectUrl;
-    let payload;
-
-    if (action.payload) {
-      const { redirectUrl: tempUrl, ...rest } = action.payload;
-
-      redirectUrl = tempUrl;
-      payload = rest;
-    }
-
     try {
-      const response = yield call(asyncAPI, payload);
+      let redirectUrl;
+
+      const response = yield call(asyncAPI, action.payload);
 
       yield put({
         type: type.SUCCESS,
         payload: response.data,
       });
+
+      if (response.redirectUrl) {
+        redirectUrl = response.redirectUrl;
+      }
 
       if (redirectUrl) {
         yield put(

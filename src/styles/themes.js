@@ -5,6 +5,7 @@ export const themes = {
     ...tokens,
     color: {
       primary: palette.primary,
+      highlight: "#20BDA1",
       background: palette.gray[100],
       surface: palette.white,
       gray: palette.gray[500],

@@ -40,10 +40,9 @@ const fetchPostList = createAction(
   })
 );
 const write = createAction(WRITE.REQUEST, (newPostForm) => newPostForm);
-const edit = createAction(EDIT.REQUEST, (id, editPostForm, redirectUrl) => ({
+const edit = createAction(EDIT.REQUEST, (id, editPostForm) => ({
   id,
   editPostForm,
-  redirectUrl,
 }));
 const fetchById = createAction(FETCH_BY_ID.REQUEST, (id) => ({ id }));
 const remove = createAction(REMOVE.REQUEST, (id) => ({ id }));

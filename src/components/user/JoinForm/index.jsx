@@ -7,6 +7,7 @@ import {
   CustomLink,
   SocialLogin,
   SimpleButton,
+  Hr,
 } from "components";
 
 const { loginPage } = config.route;
@@ -50,6 +51,7 @@ export function JoinForm({ title, form, onChange, onSubmit }) {
       <SimpleButton primary wide onClick={onSubmit}>
         회원가입
       </SimpleButton>
+      <Hr />
       <SocialLogin type={title} />
       <CustomLink to={loginPage}>로그인 페이지로 이동</CustomLink>
     </AuthFormLayout>

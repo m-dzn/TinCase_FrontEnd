@@ -31,7 +31,15 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    text-decoration: none;
+    text-decoration: none;    
+  }
+
+  .ql-editor a {
+    color: ${({ theme }) => theme.color.highlight};
+
+    &:hover {
+      filter: brightness(80%);
+    }
   }
 
   button {

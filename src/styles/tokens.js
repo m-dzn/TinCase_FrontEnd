@@ -102,6 +102,11 @@ export const aliasTokens = {
       radius: unit,
     },
   },
+  hr: {
+    widthPercent: 90,
+    height: 0.05,
+    color: palette.gray[500],
+  },
 };
 
 export const tokens = {
