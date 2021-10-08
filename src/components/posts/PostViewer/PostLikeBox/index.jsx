@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
 export function PostLikeBox({ like, onClick, ...rest }) {
   return (
-    <Wrapper onClick={onClick} {...rest}>
+    <Wrapper onClick={() => onClick(like)} {...rest}>
       {like ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
       좋아요
     </Wrapper>

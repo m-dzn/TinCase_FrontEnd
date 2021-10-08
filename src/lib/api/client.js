@@ -10,8 +10,9 @@ export const userClient = axios.create({
 export const authHeader = () => {
   const token = localStorage.getItem(ACCESS_TOKEN);
   return {
+    withCredentials: true,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token ? `Bearer ${token}` : "",
     },
   };
 };

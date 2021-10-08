@@ -8,8 +8,14 @@ import {
   PostWritePage,
   PostEditPage,
   PostDetailPage,
+  GalleryListPage,
 } from "pages";
-import { BsNewspaper, BsPencilSquare } from "react-icons/bs";
+import {
+  BsNewspaper,
+  BsPencilSquare,
+  BsGrid1X2Fill,
+  BsImageFill,
+} from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 
 const { route } = config;
@@ -48,6 +54,14 @@ export const sidebarRoutes = [
     path: route.postListPage,
     exact: true,
     page: PostListPage,
+    dashboard: true,
+  },
+  {
+    label: "Gallery",
+    icon: BsImageFill,
+    path: route.galleryListPage,
+    exact: true,
+    page: GalleryListPage,
     dashboard: true,
   },
 ];

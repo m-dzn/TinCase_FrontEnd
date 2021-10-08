@@ -14,11 +14,13 @@ export async function writePost(newPostForm) {
 }
 
 export async function readPost({ id }) {
-  return userClient.get(`${postMapping}/${id}`);
+  const response = await userClient.get(`${postMapping}/${id}`, authHeader());
+  console.log(response);
+  return response;
 }
 
 export async function updatePost({ id, editPostForm }) {
-  let response = await userClient.put(
+  let response = await userClient.patch(
     `${postMapping}/${id}`,
     editPostForm,
     authHeader()
@@ -35,4 +37,12 @@ export async function removePost({ id }) {
 
 export async function getPostList({ pageNum, pageSize }) {
   return userClient.get(`${postMapping}`, { params: { pageNum, pageSize } });
+}
+
+export async function like({ postId }) {
+  return userClient.post(`${postMapping}/${postId}/like`, null, authHeader());
+}
+
+export async function unlike({ postId }) {
+  return userClient.delete(`${postMapping}/${postId}/unlike`, authHeader());
 }

@@ -12,7 +12,7 @@ const ProfileArea = styled.div`
 
 export function UserPage() {
   const dispatch = useDispatch();
-  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  const currentUser = useSelector(({ user }) => user.currentUser);
 
   const onChangeFile = useCallback(
     (event) => {

@@ -30,6 +30,16 @@ const REMOVE = {
   FAILURE: "post/REMOVE_FAILURE",
 };
 const PAGE_CHANGE = "post/PAGE_CHANGE";
+const LIKE = {
+  REQUEST: "post/LIKE_REQUEST",
+  SUCCESS: "post/LIKE_SUCCESS",
+  FAILURE: "post/LIKE_FAILURE",
+};
+const UNLIKE = {
+  REQUEST: "post/UNLIKE_REQUEST",
+  SUCCESS: "post/UNLIKE_SUCCESS",
+  FAILURE: "post/UNLIKE_FAILURE",
+};
 
 // 액션 생성자
 const fetchPostList = createAction(
@@ -47,6 +57,8 @@ const edit = createAction(EDIT.REQUEST, (id, editPostForm) => ({
 const fetchById = createAction(FETCH_BY_ID.REQUEST, (id) => ({ id }));
 const remove = createAction(REMOVE.REQUEST, (id) => ({ id }));
 const pageChange = createAction(PAGE_CHANGE, (pageNum) => ({ pageNum }));
+const like = createAction(LIKE.REQUEST, (postId) => ({ postId }));
+const unlike = createAction(UNLIKE.REQUEST, (postId) => ({ postId }));
 
 export const postActions = {
   fetchPostList,
@@ -55,6 +67,8 @@ export const postActions = {
   fetchById,
   remove,
   pageChange,
+  like,
+  unlike,
 };
 
 // 리덕스 사가
@@ -63,6 +77,8 @@ const write$ = createAsyncSaga(WRITE, postAPI.writePost);
 const edit$ = createAsyncSaga(EDIT, postAPI.updatePost);
 const fetchById$ = createAsyncSaga(FETCH_BY_ID, postAPI.readPost);
 const remove$ = createAsyncSaga(REMOVE, postAPI.removePost);
+const like$ = createAsyncSaga(LIKE, postAPI.like);
+const unlike$ = createAsyncSaga(UNLIKE, postAPI.unlike);
 
 export function* postSaga() {
   yield takeLatest(FETCH_POST_LIST.REQUEST, fetchPostList$);
@@ -70,6 +86,8 @@ export function* postSaga() {
   yield takeLatest(EDIT.REQUEST, edit$);
   yield takeLatest(FETCH_BY_ID.REQUEST, fetchById$);
   yield takeLatest(REMOVE.REQUEST, remove$);
+  yield takeLatest(LIKE.REQUEST, like$);
+  yield takeLatest(UNLIKE.REQUEST, unlike$);
 }
 
 // 초기 상태
@@ -121,6 +139,24 @@ export const post = handleActions(
         ...state,
       };
     },
+    [LIKE.REQUEST]: (state, action) => state,
+    [LIKE.SUCCESS]: (state, { payload }) => ({
+      ...state,
+      currentPost: {
+        ...state.currentPost,
+        like: true,
+      },
+    }),
+    [LIKE.FAILURE]: (state, action) => state,
+    [UNLIKE.REQUEST]: (state, action) => state,
+    [UNLIKE.SUCCESS]: (state, action) => ({
+      ...state,
+      currentPost: {
+        ...state.currentPost,
+        like: false,
+      },
+    }),
+    [UNLIKE.FAILURE]: (state, action) => state,
   },
   initState
 );

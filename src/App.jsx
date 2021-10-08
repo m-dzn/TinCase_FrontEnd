@@ -4,17 +4,17 @@ import { GlobalStyles, themes } from "styles";
 import { ThemeProvider } from "styled-components";
 import { RootRouter } from "routes";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions } from "modules/auth";
+import { userActions } from "modules";
 
 const { ACCESS_TOKEN } = config.const;
 
 export function App() {
   const dispatch = useDispatch();
-  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  const currentUser = useSelector(({ user }) => user.currentUser);
 
   useEffect(() => {
     if (!currentUser && localStorage.getItem(ACCESS_TOKEN)) {
-      dispatch(authActions.getCurrentUser());
+      dispatch(userActions.getCurrentUser());
     }
   }, [currentUser]);
 

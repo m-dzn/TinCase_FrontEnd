@@ -3,6 +3,7 @@ import config from "config.json";
 import styled, { css } from "styled-components";
 import { Avatar } from "components";
 import { Link } from "react-router-dom";
+import { changePostDateFormat } from "lib/utils/dateUtils";
 
 const { postListPage } = config.route;
 
@@ -39,7 +40,7 @@ export function PostItem({ post, pagination }) {
             {post.title}
           </Link>
         </Title>
-        <div>{post.createdAt}</div>
+        <div>{changePostDateFormat(post.createdAt)}</div>
       </div>
       <div style={{ display: "flex" }}>
         <div>{post.viewCnt}</div>

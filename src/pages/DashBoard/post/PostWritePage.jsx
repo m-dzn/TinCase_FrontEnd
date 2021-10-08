@@ -16,7 +16,7 @@ const initForm = {
 export function PostWritePage({ location }) {
   const dispatch = useDispatch();
   const [newPostForm, setNewPostForm] = useState(initForm);
-  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  const currentUser = useSelector(({ user }) => user.currentUser);
 
   const { title, writerId, content } = newPostForm;
 

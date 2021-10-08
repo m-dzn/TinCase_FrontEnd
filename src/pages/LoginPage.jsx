@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { AuthLayout, LoginForm } from "components";
-import { authActions } from "modules/auth";
 import { useDispatch } from "react-redux";
+import { userActions } from "modules";
 
 const initState = {
   email: "",
@@ -26,7 +26,7 @@ export function LoginPage({ location }) {
   }, []);
 
   const onSubmit = useCallback(() => {
-    dispatch(authActions.login(loginForm, from?.pathname || "/"));
+    dispatch(userActions.login(loginForm, from?.pathname || "/"));
   }, [loginForm, from]);
 
   return (

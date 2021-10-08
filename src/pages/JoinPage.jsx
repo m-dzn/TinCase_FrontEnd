@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { AuthLayout, JoinForm } from "components";
 import { useDispatch } from "react-redux";
-import { authActions } from "modules/auth";
+import { userActions } from "modules";
 
 const initState = {
   email: "",
@@ -35,7 +35,7 @@ export function JoinPage({ location }) {
     console.log("hi");
     const { confirmPassword, ...requestForm } = joinForm;
 
-    dispatch(authActions.join(requestForm, from.pathname));
+    dispatch(userActions.join(requestForm, from.pathname));
   }, [joinForm, from]);
 
   return (

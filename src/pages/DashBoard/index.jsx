@@ -4,7 +4,7 @@ import { SiteLayout } from "components";
 import { Redirect, Route, Switch } from "react-router";
 import { sidebarRoutes, navbarRoutes, pages } from "routes";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions } from "modules/auth";
+import { userActions } from "modules";
 import { UserPage } from "pages";
 import PrivateRoute from "routes/PrivateRoute";
 import { history } from "lib/history";
@@ -13,11 +13,11 @@ const { route } = config;
 
 export function DashBoard(props) {
   const dispatch = useDispatch();
-  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  const currentUser = useSelector(({ user }) => user.currentUser);
 
   const onClickLogout = useCallback(() => {
     if (confirm(config.msg.logout)) {
-      dispatch(authActions.logout());
+      dispatch(userActions.logout());
       history.push("/");
     }
   }, []);

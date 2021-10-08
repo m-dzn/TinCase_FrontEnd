@@ -46,9 +46,9 @@ const PostNav = styled.div`
 export function PostDetailPage({ match }) {
   const dispatch = useDispatch();
   const postId = match.params.postId;
-  const { currentPost, currentUser } = useSelector(({ auth, post }) => ({
+  const { currentPost, currentUser } = useSelector(({ user, post }) => ({
     currentPost: post.currentPost,
-    currentUser: auth.currentUser,
+    currentUser: user.currentUser,
   }));
   const query = `?postId=${postId}&${location.search.substring(1)}`;
 
@@ -60,17 +60,26 @@ export function PostDetailPage({ match }) {
     history.push(postListPage);
   }, [postId]);
 
+  const onClickLike = useCallback(
+    (like) => {
+      if (!postId) return;
+
+      dispatch(like ? postActions.unlike(postId) : postActions.like(postId));
+    },
+    [postId]
+  );
+
   useEffect(() => {
-    if (postId) {
-      dispatch(postActions.fetchById(postId));
-    }
+    if (!postId) return;
+
+    dispatch(postActions.fetchById(postId));
   }, [postId]);
 
   if (!currentPost) return <div>로딩 중</div>;
 
   return (
     <ContentsLayout>
-      <PostViewer post={currentPost} />
+      <PostViewer post={currentPost} onClickLike={onClickLike} />
       <PostDetailButtonBox
         query={query}
         onClickRemove={onClickRemove}

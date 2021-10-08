@@ -73,6 +73,8 @@ export const aliasTokens = {
     width: unit * 10,
     background: palette.gray[900],
     avatarSize: navAvatarSize,
+    logoBMargin: unit * 6,
+    itemGap: unit,
   },
   postList: {
     vPad: unit * 6,

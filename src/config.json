@@ -9,12 +9,16 @@
   "route": {
     "joinPage": "/join",
     "loginPage": "/login",
+    "oAuth2Redirect": "/oauth2/redirect",
     "userPage": "/user",
     "postListPage": "/post",
     "postWritePage": "/post/write",
     "postEditPage": "/post/edit",
     "postDetailPage": "/post/:postId",
-    "oAuth2Redirect": "/oauth2/redirect"
+    "galleryListPage": "/gallery",
+    "galleryWitePage": "/gallery/write",
+    "galleryEditPage": "/gallery/edit",
+    "galleryDetailPage": "/gallery/:postId"
   },
   "const": {
     "ACCESS_TOKEN": "access_token",

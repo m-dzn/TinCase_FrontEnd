@@ -20,8 +20,8 @@ export function PostEditPage({ location }) {
 
   const dispatch = useDispatch();
   const [editPostForm, setEditPostForm] = useState(initForm);
-  const { currentUser, currentPost } = useSelector(({ auth, post }) => ({
-    currentUser: auth.currentUser,
+  const { currentUser, currentPost } = useSelector(({ user, post }) => ({
+    currentUser: user.currentUser,
     currentPost: post.currentPost,
   }));
 
